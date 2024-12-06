@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void bestFit(int blocks[], int b, int processes[], int p) {
+void worstFit(int blocks[], int b, int processes[], int p) {
     int allocation[p];
 
     for (int i = 0; i < p; i++) {
@@ -8,17 +8,18 @@ void bestFit(int blocks[], int b, int processes[], int p) {
     }
 
     for (int i = 0; i < p; i++) {
-        int best_idx = -1;
+        int worst_idx = -1;
         for (int j = 0; j < b; j++) {
-            if (blocks[j] >= processes[i]) {
-                if (best_idx == -1 || blocks[best_idx] > blocks[j]) {
-                    best_idx = j;
+            if (blocks[j] >= processes[i]){
+                if (worst_idx == -1 || blocks[worst_idx] < blocks[j]){
+                    worst_idx = j;
                 }
             }
         }
-        if (best_idx != -1){
-            allocation[i] = best_idx;
-            blocks[best_idx] -= processes[i];
+
+        if (worst_idx != -1) {
+            allocation[i] = worst_idx;
+            blocks[worst_idx] -= processes[i];
         }
     }
 
@@ -29,16 +30,16 @@ void bestFit(int blocks[], int b, int processes[], int p) {
             printf("%d - no free block allocated\n", processes[i]);
     }
 }
-
-int main() {
+int main(){
     int b, p;
 
     printf("Enter number of free blocks available: ");
     scanf("%d", &b);
+
     int blocks[b];
 
     printf("Enter sizes of the blocks: ");
-    for (int i = 0; i < b; i++) {
+    for (int i = 0; i < b; i++){
         scanf("%d", &blocks[i]);
     }
 
@@ -47,10 +48,10 @@ int main() {
 
     int processes[p];
     printf("Enter the memory requirements of processes: ");
-    for (int i = 0; i < p; i++) {
+    for (int i = 0; i < p; i++){
         scanf("%d", &processes[i]);
     }
     
-    bestFit(blocks, b, processes, p);
+    worstFit(blocks, b, processes, p);
     return 0;
 }

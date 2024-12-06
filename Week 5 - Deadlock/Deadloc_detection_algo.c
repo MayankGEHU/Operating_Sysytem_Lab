@@ -10,7 +10,7 @@ int isDeadlockDetected(int processes, int resources, int max[MAX][MAX], int allo
     
     int count = 0;
     while (count < processes) {
-        int processFound = 0;
+        int found = 0;
         for (int i = 0; i < processes; i++){
             if (!finish[i]) {
                 int canProceed = 1;
@@ -26,12 +26,12 @@ int isDeadlockDetected(int processes, int resources, int max[MAX][MAX], int allo
                     }
                     finish[i] = 1;
                     count++;
-                    processFound = 1;
+                    found = 1;
                     break;
                 }
             }
         }
-        if (!processFound){
+        if (!found){
             return 1;
         }
     }
@@ -41,25 +41,31 @@ int main(){
     int processes, resources;
     printf("Enter number of processes: ");
     scanf("%d", &processes);
+
     printf("Enter number of resources: ");
     scanf("%d", &resources);
+
     int max[MAX][MAX], allocation[MAX][MAX], available[MAX];
+
     printf("Enter maximum requirement matrix:\n");
     for (int i = 0; i < processes; i++){
         for (int j = 0; j < resources; j++){
             scanf("%d", &max[i][j]);
         }
     }
+
     printf("Enter allocated matrix:\n");
     for (int i = 0; i < processes; i++) {
         for (int j = 0; j < resources; j++){
             scanf("%d", &allocation[i][j]);
         }
     }
+
     printf("Enter available resource vector:\n");
     for (int i = 0; i < resources; i++) {
         scanf("%d", &available[i]);
     }
+    
     if (isDeadlockDetected(processes, resources, max, allocation, available)){
         printf("Deadlock detected\n");
     } else {

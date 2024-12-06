@@ -10,7 +10,7 @@ int main() {
         safeSeq[MAX_PROCESS], work[MAX_RESOURCE];
 
     printf("Enter the number of processes: ");
-    scanf("%d", &n);
+    scanf("%d", &n);  
     printf("Enter the number of resources: ");
     scanf("%d", &m);
 
@@ -52,14 +52,14 @@ int main() {
         int found = 0;
         for (i = 0; i < n; ++i) {
             if (finish[i] == 0) {
-                int flag = 1;
+                int canProceed = 1;
                 for (j = 0; j < m; ++j) {
                     if (need[i][j] > work[j]) {
-                        flag = 0;
+                        canProceed = 0;
                         break;
                     }
                 }
-                if (flag) {
+                if (canProceed) {
                     for (k = 0; k < m; ++k) {
                         work[k] += allocation[i][k];
                     }
